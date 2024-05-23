@@ -48,4 +48,9 @@ class NoteManager: ObservableObject {
             return Note(id: UUID(uuidString: fileURL.deletingPathExtension().lastPathComponent)!, title: components[0], content: components[1])
         } ?? []
     }
+
+    // Public method to get notes directory URL
+    func getNotesDirectory() -> URL {
+        return notesDirectory
+    }
 }

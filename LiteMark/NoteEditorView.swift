@@ -5,30 +5,45 @@ struct NoteEditorView: View {
     var onSave: () -> Void
 
     var body: some View {
-        VStack {
+        VStack(alignment: .leading, spacing: 16) {
             TextField("Title", text: $note.title, onCommit: onSave)
-                .font(.title)
+                .font(.title2)
                 .padding()
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .background(Color("bgcolor"))
+                .cornerRadius(10)
+                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 5)
+                .textFieldStyle(PlainTextFieldStyle())
 
             Divider()
+                .padding(.horizontal, 40.0)
+                .padding(.vertical, 10.0)
+                .foregroundColor(Color("separator"))
 
-            TextEditor(text: $note.content)
+            CustomTextEditor(text: $note.content)
                 .padding()
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
-                .onChange(of: note.content) { _ in
+                .background(Color("bgcolor"))
+                .cornerRadius(10)
+                .onChange(of: note.content) {
                     onSave()
                 }
         }
         .padding()
+        .background(Color("bgcolor"))
+        .cornerRadius(10)
         .navigationTitle(note.title)
         .onDisappear(perform: onSave)
+        .onAppear {
+            hideToolbar()
+        }
+        .onDisappear {
+            hideToolbar()
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
 struct NoteEditorView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteEditorView(note: .constant(Note(id: UUID(), title: "Sample Note", content: "This is a sample note.")), onSave: {})
+        NoteEditorView(note: .constant(Note(id: UUID(), title: "Title", content: "Start writing!")), onSave: {})
     }
 }

@@ -1,8 +1,11 @@
-//
-//  hidetoolbar.swift
-//  LiteMark
-//
-//  Created by Tariel Davidashvili on 2024-05-23.
-//
+import SwiftUI
 
-import Foundation
+func hideToolbar() {
+    DispatchQueue.main.async {
+        if let window = NSApplication.shared.windows.first {
+            window.titleVisibility = .hidden
+            window.titlebarAppearsTransparent = true
+            window.isMovableByWindowBackground = true
+        }
+    }
+}
